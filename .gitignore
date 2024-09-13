@@ -9,4 +9,4 @@ data/*
 !jeongeun/
 !minjun
 !README.md
-
+!automate_git.sh
