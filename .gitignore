@@ -12,6 +12,5 @@ data/*
 !README.md
 
 !setup_miniconda.sh
-!setup_nlp-09_repo-1.sh
-!setup_nlp-09_repo-2.sh
 !setup_STS_repo.sh
+!generate_server.txt
