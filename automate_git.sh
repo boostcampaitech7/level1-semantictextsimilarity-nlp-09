@@ -1,9 +1,9 @@
 #!/bin/bash
 
-folder_list=("donghoon")
-email_list=("woosa0114@gmail.com")
-name_list=("mrsuit0114")
-branch_list=("donghoon")
+folder_list=("donghoon" "donghyuk" "heejun" "jeongeun" "minjun")
+email_list=("woosa0114@gmail.com" "pangyongpy@gmail.com" "y10cuk@naver.com" "irin7348@naver.com" "mj84242160@gmail.com")
+name_list=("mrsuit0114" "someDeveloperDH" "gwaksital" "wjddms4299" "minjunk2")
+branch_list=("donghoon" "donghyuk" "heejun" "jeongeun" "minjun")
 
 remote_url="git@github.com:gwaksital/boostcamp_project1-Semantic_Text_Similarity.git"
 
