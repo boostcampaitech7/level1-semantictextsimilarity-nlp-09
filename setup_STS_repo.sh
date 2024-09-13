@@ -20,7 +20,7 @@ for i in "${!folder_list[@]}"; do
     git config --local user.name "$name"
     git fetch origin
     git checkout -b "$branch" "origin/$branch"
-    echo -e "\ngit init with .sh file\n" >> README.md
+    echo -e "\ngit init with .sh file\n" >> generate_server.txt
     git add .
     git commit -m 'git init with .sh file'
     git push origin "$branch"
