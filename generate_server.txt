@@ -1,1 +1,3 @@
 generate server
+
+generate server
