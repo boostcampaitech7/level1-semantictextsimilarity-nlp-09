@@ -1,0 +1,4 @@
+name: myenv
+channels:
+  - defaults
+prefix: /data/ephemeral/home/miniconda3/envs/myenv
