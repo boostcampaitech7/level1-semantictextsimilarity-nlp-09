@@ -1,0 +1,7 @@
+model/*
+output/*
+preprocessed/*
+team_data/*
+team_model/*
+team_output/*
+lightning_logs/*
