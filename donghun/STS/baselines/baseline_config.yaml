@@ -1,0 +1,17 @@
+admin: donghoon
+patience: 5 
+seed: 42
+train:
+  model_name: snunlp/KR-ELECTRA-discriminator
+  batch_size: 32
+  epoch: 10
+  LR: 0.00003
+  LossF: MSELoss
+  optim: AdamW
+  shuffle: True
+
+  #version 2 KR-RLECTRA .9318 10epoch , train_even_updated_ko2en.csv
+  #version 4 KR-RLECTRA .9234 10epoch, train_preprop_v2_oversampled.csv 3은 에러로 생략
+  #version 5 bespin-global/klue-sroberta-base-continue-learning-by-mnr train_preprop_v2_oversampled.csv
+  
+  
