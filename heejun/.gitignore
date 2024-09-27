@@ -1,0 +1,14 @@
+*.csv
+data/*.txt
+.conda
+*.pt
+__pycache__
+lightning_logs/*
+STS/lightning_logs/*
+# *.csv
+wandb
+batch_compare
+epoch_compare
+train_data_sweep
+large_final_sweep
+wandb
