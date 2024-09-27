@@ -6,9 +6,6 @@ import pandas as pd
 import pytorch_lightning as pl
 from torch.utils.data import Dataset, DataLoader
 
-
-
-
 class Dataset(torch.utils.data.Dataset):
     def __init__(self, inputs, targets=[]):
         self.inputs = inputs
@@ -53,7 +50,7 @@ class Dataloader(pl.LightningDataModule):
         self.val_dataset = None
         self.test_dataset = None
         self.predict_dataset = None
-          
+
         self.tokenizer = transformers.AutoTokenizer.from_pretrained(self.model_name, max_length=160)
         self.target_columns = ['label']
         self.delete_columns = ['id']

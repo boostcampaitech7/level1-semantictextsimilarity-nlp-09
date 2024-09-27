@@ -61,18 +61,20 @@ def weight_voting(dfs, weights):
 
 if __name__ == "__main__":
     
-    file_paths = ['/data/ephemeral/home/donghyuk/a/DH.csv',
-                  '/data/ephemeral/home/donghyuk/a/la.csv',
-                  '/data/ephemeral/home/donghyuk/a/soft_voted_final_output (3).csv']
+    file_paths = ['./0.9330412_snunlp-KR-ELECTRA-discriminator_output.csv',
+                  "./DH_KrELRCTRA_9302.csv",
+                  "./output_hun.csv",
+                  "./output_1.csv",
+                  "./output_3.csv"]
     
     
     
     
     dfs = [pd.read_csv(path) for path in file_paths]
     
-    weights = [0.5,0.2,0.3]
+    weights = [0.2,0.3,0.2]
     
-    voting_method = "weight-voting" #sys.argv[1]
+    voting_method = sys.argv[1]
     
     if voting_method == "soft-voting":
         final_output = soft_voting(dfs)

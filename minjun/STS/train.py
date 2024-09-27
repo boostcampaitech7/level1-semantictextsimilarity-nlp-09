@@ -2,21 +2,17 @@ import argparse
 import yaml
 import os
 import shutil
-#beomi/KcELECTRA-base
+
 import torch
 
 import pytorch_lightning as pl
+#import wandb
+
 from src import data_pipeline
-from src.model3 import Model 
+from src.model import Model
 
 from pytorch_lightning.callbacks import EarlyStopping
 import random
-
-
-# from sentence_transformers import SentenceTransformer
-from transformers import ElectraTokenizer, ElectraModel
-
-
 
 if __name__ == "__main__":
     
@@ -25,20 +21,16 @@ if __name__ == "__main__":
         shutil.rmtree('lightning_logs/version_0')
     
     parser = argparse.ArgumentParser()
-    # parser.add_argument('--train_path', default='../donghyuk/data/train_preprop_v2_oversampled.csv')
-    # parser.add_argument('--dev_path', default='../donghyuk/data/dev_preprop_v2.csv')
-    # parser.add_argument('--test_path', default='../donghyuk/data/dev_preprop_v2.csv')
-    # parser.add_argument('--predict_path', default='../donghyuk/data/test_preprop_v2.csv')
-    
-    parser.add_argument('--train_path', default='../donghyuk/data/train.csv')
-    parser.add_argument('--dev_path', default='../donghyuk/data/dev.csv')
-    parser.add_argument('--test_path', default='../donghyuk/data/dev.csv')
-    parser.add_argument('--predict_path', default='../donghyuk/data/test.csv')
+    parser.add_argument('--train_path', default="../data/concat2.csv")
+    parser.add_argument('--dev_path', default='../data/dev.csv')
+    parser.add_argument('--test_path', default='../data/dev.csv')
+    parser.add_argument('--predict_path', default='../data/test.csv')
     args = parser.parse_args()
 
-    with open('STS/baselines/baseline_config.yaml') as f:
+    with open('baselines/baseline_config.yaml') as f:
         CFG = yaml.load(f, Loader=yaml.FullLoader)
-    
+        
+        
     # admin, seed, model, batch_size, epoch, LR, lossf, optim, shuffle
     print('\n'*2)
     print('*'*50)
@@ -52,8 +44,9 @@ if __name__ == "__main__":
     print(f'Optimizer: {CFG["train"]["optim"]}')
     print(f'Shuffle: {CFG["train"]["shuffle"]}')
     print('*'*50)
-
-# seed 고정
+    
+    
+    # seed 고정
     torch.manual_seed(CFG['seed'])
     torch.cuda.manual_seed(CFG['seed'])
     torch.cuda.manual_seed_all(CFG['seed'])
@@ -62,16 +55,15 @@ if __name__ == "__main__":
     dataloader = data_pipeline.Dataloader(CFG, args.train_path, args.dev_path, args.test_path, args.predict_path)
     model = Model(CFG)
 
-    # ##early stopping callback
-    # early_stopping_callback = EarlyStopping(
-    # monitor='val_loss',          
-    # patience=3,                 
-    # verbose=True,             
-    # mode='min',                 
-    # )
-    # trainer = pl.Trainer(accelerator="gpu", devices=1, max_epochs=CFG['train']['epoch'], log_every_n_steps=1, callbacks=[early_stopping_callback])
-    
-    
+    ''' early stopping callback
+    early_stopping_callback = EarlyStopping(
+    monitor='val_loss',          # 검증 손실을 모니터링
+    patience=3,                  # 성능 향상이 없을 경우 몇 에폭 후에 조기 종료할지 설정
+    verbose=True,                # 조기 종료시 로그 출력 여부
+    mode='min',                  # 손실이 최소화되어야 함
+    )
+    trainer = pl.Trainer(accelerator="gpu", devices=1, max_epochs=CFG['train']['epoch'], log_every_n_steps=1, callbacks=[early_stopping_callback])
+    '''
     
     # train
     trainer = pl.Trainer(accelerator="gpu", devices=1, max_epochs=CFG['train']['epoch'], log_every_n_steps=1, gradient_clip_val=1.0)
@@ -88,19 +80,8 @@ if __name__ == "__main__":
     model_path = f"lightning_logs/{new_log_dir}/model.pt"
     torch.save(model, model_path)
     
-    src_file = 'STS/baselines/baseline_config.yaml'
+    src_file = 'baselines/baseline_config.yaml'
     dst_file = os.path.join(f'lightning_logs/{new_log_dir}', 'baseline_config.yaml')
     shutil.copy(src_file, dst_file)
     
     print(f"Model saved at {model_path}")
-    
-    if pearson <= 0.92:
-        # delete the directory
-        print('\n'*2)
-        print(f"Model is not good enough. Deleting the directory {new_log_dir}")
-        shutil.rmtree(f'lightning_logs/{new_log_dir}')
-        # make an empty folder named pearson
-        os.makedirs(f'lightning_logs/{new_log_dir}', exist_ok=True)
-        src_file = 'STS/baselines/baseline_config.yaml'
-        dst_file = os.path.join(f'lightning_logs/{new_log_dir}', 'baseline_config.yaml')
-        shutil.copy(src_file, dst_file)

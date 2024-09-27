@@ -1,0 +1,11 @@
+admin: minjun
+patience: 5 
+seed: 42
+train:
+  model_name: snunlp/KR-ELECTRA-discriminator
+  batch_size: 16
+  epoch: 5
+  LR: 0.00001
+  LossF: L1Loss
+  optim: AdamW
+  shuffle: True
