@@ -1,0 +1,14 @@
+admin: heejun
+patience: 5 
+seed: 42
+train_data: train_prep_v2_oversampled.csv
+train:
+  model_name: klue/roberta-large
+  model_custom: basic
+  LR: 0.00005
+  batch_size: 32
+  freeze_layers: 12
+  epoch: 13
+  LossF: L1Loss
+  optim: AdamW
+  shuffle: True
